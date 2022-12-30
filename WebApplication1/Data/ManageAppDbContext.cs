@@ -1,15 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
 using WebApplication1.Data.Entities;
 
 namespace WebApplication1.Data
 {
-    public class ManageAppDbContext:IdentityDbContext<ManageUser>
+    public class ManageAppDbContext : IdentityDbContext<ManageUser>
     {
         public ManageAppDbContext(DbContextOptions options) : base(options)
         {
@@ -24,12 +21,13 @@ namespace WebApplication1.Data
             builder.Entity<IdentityRole>().Property(x => x.Id).HasMaxLength(50).IsRequired(true);
             builder.Entity<ManageUser>().Property(x => x.Id).HasMaxLength(50).IsRequired(true);
 
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
 
         }
 
 
-      public DbSet<ManageUser> ManageUsers { get; set; }
+        public DbSet<ManageUser> ManageUsers { get; set; }
 
     }
 }
